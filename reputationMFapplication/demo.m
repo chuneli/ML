@@ -9,6 +9,10 @@ B =[
      2     4     1
      3     4     1
      5     3     1];
+	 
+	 
+	 
+	 
  A=load('1Avail.TXT');
   AA=sparse(A(:,1),A(:,2),A(:,3));
   AAA=full(AA);
