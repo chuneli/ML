@@ -1,4 +1,69 @@
-load('data_sigma1.000000_n100000.mat'); %d=10,qtrue=4
+ %% sampling
+ n=10;
+ d=3;
+ q=1;
+ stdvarn=2;
+ [ T,W,X ] = pcaSample1( n,d,q, stdvarn );
+ save('data3.mat');
+ 
+ %% C S
+ WW=W*W';
+ C=WW+eye(3); % noise variance sigma2=1;
+ [V,G,Vrrr]=svd(C); %特征值就是奇异值
+ lambda=diag(G);
+
+ S=T'*T/n;
+ [U,L,Urrr]=svd(S);
+ l=diag(L);
+ 
+ %% invC
+  invC=inv(C);
+ invC1=V*diag(1./lambda)*V';
+ 
+ %% detc
+ detc=det(C);
+ detc1=prod(lambda);
+ 
+ %% sum tC^-1 t
+ sumtct=0;
+ for i=1:n
+     sumtct=sumtct+T(i,:)*invC*T(i,:)';
+ end
+ 
+sumtct1= n*trace(invC*S);
+
+%% 
+q=1;
+ Uq = U(:, 1:q); %按特征值排序的特征向量
+ Gammaq=diag(l(1:q));
+ es1sigma2 = mean(l(q+1:end));
+ es1W =  Uq * sqrt(   Gammaq-es1sigma2*eye(q)   );
+es1C=es1W*es1W'+es1sigma2*eye(d);
+[es1V,es1G,es1Vrrr]=svd(es1C);
+
+detes1C=det(es1C);
+detes1C1=(l(2)+l(3))^2*l(1)/4;
+
+
+CS=invC*S;
+SdG=diag(1./lambda)*S;
+CS1=V*SdG*V';
+
+t=T(1,:);
+t=t';
+t'*inv(C)*t
+t(1)*t(1)/lambda(1)+t(2)*t(2)/lambda(2)+ t(3)*t(3)/lambda(3)
+
+ sumtct2=0;
+ for i=1:n
+     t=T(i,:);
+     t2=t.^2;
+     sumtct2=sum(t2./lambda')+sumtct2;
+ end
+ 
+ sumtct3=n*sum(l./lambda);
+ 
+  
 q=8;
 % T=T(1:20,:);
 
