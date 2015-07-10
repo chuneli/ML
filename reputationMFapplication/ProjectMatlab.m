@@ -22,7 +22,7 @@ function varargout = ProjectMatlab(varargin)
 
 % Edit the above text to modify the response to help ProjectMatlab
 
-% Last Modified by GUIDE v2.5 08-Jun-2015 10:45:36
+% Last Modified by GUIDE v2.5 23-Jun-2015 10:10:15
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -146,8 +146,8 @@ fclose(fid);
 set(handles.linkprediction,'visible','off');
 set(handles.information,'visible','off');
 %hFig = figure('Menubar','none', 'Toolbar','none');
-hPan = uipanel('Title','User Service Rating','FontSize', 14, ...
-    'Units','normalized', 'Position',[0.02 0.04 0.7 0.9]);
+hPan = uipanel('Title','User Service Rating','FontSize', 10, ...
+    'Units','normalized', 'Position',[0.01 0.01 0.25 0.99]);
 hEdit = uicontrol(hPan, 'Style','edit', 'FontSize',12, ...
     'Min',0, 'Max',2, 'HorizontalAlignment','left', ...
     'BackgroundColor','white',...
@@ -166,6 +166,7 @@ function figure1_CreateFcn(hObject, eventdata, handles)
 
 % --- Executes on button press in reindex.
 function reindex_Callback(hObject, eventdata, handles)
+fprintf('start reindex ....');
 % hObject    handle to reindex (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
@@ -175,8 +176,10 @@ size(data)
 [Q,L,R] =  reindex (data);
 Q
 size(Q)
-hPan = uipanel('Title','User Service Rating After Reindex','FontSize', 14, ...
-    'Units','normalized', 'Position',[0.02 0.04 0.7 0.9]);
+% hPan = uipanel('Title','User Service Rating After Reindex','FontSize', 14, ...
+%     'Units','normalized', 'Position',[0.02 0.04 0.7 0.9]);
+hPan = uipanel('Title','User Service Rating After Reindex','FontSize', 10, ...
+    'Units','normalized', 'Position',[0.26 0.01 0.25 0.99]);
 hEdit = uicontrol(hPan, 'Style','edit', 'FontSize',12, ...
     'Min',0, 'Max',2, 'HorizontalAlignment','left', ...
     'BackgroundColor','white',...
@@ -250,8 +253,8 @@ function foundr_Callback(hObject, eventdata, handles)
 Q=handles.data; 
 d=0.1; 
  [ r ,A,history] = reputation( Q,d );
- hPan = uipanel('Title','User Reputation','FontSize', 14, ...
-    'Units','normalized', 'Position',[0.02 0.04 0.7 0.9]);
+ hPan = uipanel('Title','User Reputation','FontSize', 10, ...
+    'Units','normalized', 'Position',[0.51 0.01 0.15 0.99]);;
 hEdit = uicontrol(hPan, 'Style','edit', 'FontSize',12, ...
     'Min',0, 'Max',2, 'HorizontalAlignment','left', ...
     'BackgroundColor','white',...
@@ -398,6 +401,29 @@ function lb_CreateFcn(hObject, eventdata, handles)
 % handles    empty - handles not created until after all CreateFcns called
 
 % Hint: listbox controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function edit6_Callback(hObject, eventdata, handles)
+% hObject    handle to edit6 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of edit6 as text
+%        str2double(get(hObject,'String')) returns contents of edit6 as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function edit6_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit6 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
 %       See ISPC and COMPUTER.
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
